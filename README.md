@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 # GitHub API consumer
 
+### The project is [live here](https://github-api-consumer-3mrjhe73m-agirmar92.vercel.app/).
+
 This project consists of a web client and serverless API lambda functions, written in Next.js. The serverless API methods consume version 3 (REST) of the GitHub API to fetch details about users. Currently, the client has two features:
 
 1. The user can search for a user in the vast database of GitHub users with an autocomplete component.
