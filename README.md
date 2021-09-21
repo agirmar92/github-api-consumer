@@ -31,6 +31,9 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/users/fabpot](http://localhost:3000/api/users/fabpot). This endpoint can be edited in `pages/api/users/[pid].ts`.
+The [API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on:
+- [http://localhost:3000/api/users?q=fab](http://localhost:3000/api/users?q=fab). This endpoint can be edited in `pages/api/users/index.ts`.
+  - Used to search for users with the given query string `q`.
+- [http://localhost:3000/api/users/fabpot](http://localhost:3000/api/users/fabpot). This endpoint can be edited in `pages/api/users/[pid].ts`.
+  - Used to fetch more detailed information about the user with the given username.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
