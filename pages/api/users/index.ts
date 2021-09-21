@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { Octokit } from "@octokit/core";
-import { UsersSearchResults } from "../../shared/types";
+import { UsersSearchResults } from "../../../shared/types";
 
 // Initialize the octokit client with the github access token to increase rate limit
 const octokit = new Octokit({ auth: process.env.GIT_TOKEN });
@@ -27,9 +27,11 @@ export default async function handler(
 
   res.status(200).json({
     users: response.data.items.map((user) => {
+      // Destructure the data we need
+      const { login: username, avatar_url: imgUrl } = user;
       return {
-        name: user.login,
-        img_url: user.avatar_url,
+        username,
+        imgUrl,
       };
     }),
   });

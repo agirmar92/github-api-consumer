@@ -1,14 +1,15 @@
-import type { NextPage } from "next";
 import { useState } from "react";
+import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { Autocomplete, TextField, Typography, Grid } from "@mui/material";
-import styles from "../styles/Home.module.css";
 import { UserCompact } from "../shared/types";
+import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
-  const [selectedUser, setSelectedUser] = useState<UserCompact | null>(null);
   const [options, setOptions] = useState<Array<UserCompact>>([]);
+  const router = useRouter();
 
   return (
     <div className={styles.container}>
@@ -30,28 +31,29 @@ const Home: NextPage = () => {
           options={options}
           sx={{ width: 300 }}
           renderInput={(params) => <TextField {...params} label="Username" />}
-          getOptionLabel={(option: UserCompact) => option.name}
+          getOptionLabel={(option: UserCompact) => option.username}
           onChange={(_, newValue) => {
-            setSelectedUser(newValue);
+            if (newValue !== null) {
+              router.push(`users/${newValue.username}`);
+            }
           }}
           onInputChange={async (_, newInputValue) => {
             if (newInputValue.length > 1) {
               // Only search the API if we have a query string of length > 1
-              const fetchRes = await fetch(`/api/search?q=${newInputValue}`);
+              const fetchRes = await fetch(`/api/users?q=${newInputValue}`);
               const data = await fetchRes.json();
 
-              // Populate the dropdown with the results
               setOptions(data.users);
             }
           }}
           renderOption={(props, option) => {
-            const { name, img_url } = option;
+            const { username, imgUrl } = option;
             return (
               <li {...props}>
                 <Grid container alignItems="center">
                   <Grid item>
                     <Image
-                      src={img_url}
+                      src={imgUrl}
                       alt="user_avatar"
                       width="30"
                       height="30"
@@ -59,7 +61,7 @@ const Home: NextPage = () => {
                     />
                   </Grid>
                   <Typography variant="body1" color="text.secondary">
-                    {name}
+                    {username}
                   </Typography>
                 </Grid>
               </li>
